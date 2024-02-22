@@ -67,9 +67,9 @@
               <div style="margin-bottom: 1.25em; border: 0.7px solid #ccc; max-height: 12em; min-width: 15em; overflow: auto; list-style-position: outside; padding-left: 0em; padding-right: 0.6em">
               <ul>
                 {% for news in site.news %}
-                {% for cat in post.categories %}
+                {% for cat in news.categories %}
                 {% if cat == 'news' %}
-                <li> <strong style="font-weight:600">[{{post.date}}]</strong> {{post.excerpt}}</li>
+                <li> <strong style="font-weight:600">[{{news.newsdate}}]</strong> {{news.excerpt}}</li>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
