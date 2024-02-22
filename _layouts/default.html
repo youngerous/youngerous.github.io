@@ -69,7 +69,7 @@
                 {% for post in site.posts %}
                 {% for cat in post.categories %}
                 {% if cat == 'news' %}
-                <li> <strong style="font-weight:600">[{{post.newsdate}}]</strong> {{post.excerpt | escape}}</li>
+                <li>{{post.excerpt}}</li>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
