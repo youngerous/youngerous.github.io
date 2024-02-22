@@ -136,6 +136,33 @@
           {% endfor %}
           {% endfor %}
         </table>
+        
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+
+          <!-- WORK EXPERIENCE -->
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <h2>Work Experience</h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="margin-bottom: 1.25em; border: 0.7px solid #ccc; max-height: 12em; min-width: 15em; overflow: auto; list-style-position: outside; padding-left: 0em; padding-right: 0.6em">
+              <ul>
+                {% for post in site.posts %}
+                {% for cat in post.categories %}
+                {% if cat == 'work' %}
+                <li>{{post.excerpt}}</li>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+              </ul>
+              </div> 
+            </td>
+          </tr>
+        </table>
+        
+        
         <br>
         <br>
         <br>
