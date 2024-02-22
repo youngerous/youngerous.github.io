@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-00QR3KNQQD"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+  
+      gtag('config', 'G-00QR3KNQQD');
+  </script>
+  
+  <title>{{ site.name }}</title>
+
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+  <meta name="author" content="{{ site.name }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="favicon" href="/assets/favicon.ico" type="image/x-icon" sizes="16x16">
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+    <tr style="padding:0px">
+      <td style="padding:0px">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+
+          <!-- BIO -->
+          <tr style="padding:0px">
+            <td style="padding:2.5%;width:60%;vertical-align:middle">
+              <h1>
+                Takyoung Kim <small>김탁영</small>
+              </h1> 
+              <p>I am working as a Research Intern at LG AI Research. I will be an incoming Ph.D. student at the <a href="https://illinois.edu/">University of Illinois Urbana-Champaign</a> Computer Science starting from Fall 2024.
+              </p>
+              <p>
+                My main research interest is focused on solving problems arising from human-machine communication in the real-world. I’m also interested in conversational reasoning (e.g., dialogue system and question answering), knowledge-intensive NLP (e.g., retrieving information), broad range of long-context modeling, and making language models trustworthy. 
+              </p>
+              <p style="text-align:center">
+                <a target="_blank" href="https://youngerous.github.io/assets/CV_Takyoung_Kim.pdf"> CV</a> &nbsp;/&nbsp;
+                <a target="_blank" href="mailto:tk30@illinois.edu"> Email</a> &nbsp;/&nbsp;
+                <a target="_blank" href="https://github.com/youngerous">GitHub</a> &nbsp;/&nbsp;
+                <a target="_blank" href="https://scholar.google.com/citations?user=uf1yPNkAAAAJ">Google Scholar</a> &nbsp;/&nbsp;
+                <a target="_blank" href="https://www.linkedin.com/in/youngerous"> LinkedIn </a>
+              </p>
+            </td>
+            <td style="padding:2.5%;width:40%;max-width:40%">
+              <img style="width:100%;max-width:100%" alt="profile photo" src="images/profile_circle.png">
+            </td>
+          </tr>
+        </table>
+        
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+
+          <!-- NEWS -->
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <h2>News</h2>
+              
+              <div style="margin-bottom: 1.25em; border: 0.7px solid #ccc; max-height: 12em; min-width: 15em; overflow: auto; list-style-position: outside; padding-left: 0em; padding-right: 0.6em">
+              <ul>
+                {% for news in site.news %}
+                {% for cat in post.categories %}
+                {% if cat == 'news' %}
+                <li> <strong style="font-weight:600">[{{post.date}}]</strong> {{post.excerpt}}</li>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+              </ul>
+              </div> 
+            </td>
+          </tr>
+
+          <!-- PUBLICATIONS -->
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <h2>Publications</h2> (* = Equal Contribution)
+            </td>
+          </tr>
+        </table>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+
+          {% for post in site.posts %}
+          {% for cat in post.categories %}
+          {% if cat == 'research' %}
+          <tr>
+            <!-- <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
+              <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+            </td> -->
+            <td style="padding:2.5%;width:75%;vertical-align:middle">
+              <h3>{{post.title}}</h3>
+              <br>
+              {{post.authors}}
+
+              <br>
+              <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
+              {% if post.venue2 %}
+              <br>
+              <em>{{post.venue2}}</em>, {{ post.date2 }}
+              {% endif %}
+              <br>
+              {% if post.arxiv %}
+              <a target="_blank" href="{{post.arxiv}}">link</a>
+              {% endif %}
+              {% if post.video %}
+               / <a target="_blank" href="{{post.video}}">video</a>
+              {% endif %}
+              {% if post.code %}
+               / <a target="_blank" href="{{post.code}}">code</a>
+              {% endif %}
+              {% if post.poster %}
+               / <a target="_blank" href="{{post.poster}}">poster</a>
+              {% endif %}
+              {% if post.slides %}
+               / <a target="_blank" href="{{post.slides}}">slides</a>
+              {% endif %}
+              {% if post.website %}
+               / <a target="_blank" href="{{post.website}}">website</a>
+              {% endif %}
+              {% if post.youtube %}
+               / <a target="_blank" href="{{post.youtube}}">youtube</a>
+              {% endif %}
+              <p></p>
+              {{ post.excerpt }}
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% endfor %}
+        </table>
+        <br>
+        <br>
+        <br>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:0px">
+              <br>
+              <p style="text-align:center;font-size:small;">
+                Design and source code from <a style="font-size:small;" href="https://jonbarron.info">Jon Barron's</a> and <a style="font-size:small;" href="https://leonidk.com/">Leonid Keselman's</a> website
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
+
