@@ -69,7 +69,7 @@
                 {% for post in site.posts %}
                 {% for cat in post.categories %}
                 {% if cat == 'news' %}
-                <li> <strong style="font-weight:600">[{{post.newsdate}}]</strong> <span>{{post.excerpt}}</span></li>
+                <li> <strong style="font-weight:600">[{{post.newsdate}}]</strong> {{post.excerpt | escape}}</li>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
@@ -127,7 +127,7 @@
               {% if post.youtube %}
                / <a target="_blank" href="{{post.youtube}}">youtube</a>
               {% endif %}
-              <p></p>
+              <!-- <p></p> -->
               {{ post.excerpt }}
             </td>
           </tr>
