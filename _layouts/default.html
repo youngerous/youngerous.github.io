@@ -79,6 +79,30 @@
           </tr>
         </table>
 
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <!-- WORK EXPERIENCE -->
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <h2>Work Experience</h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <ul>
+                  {% for post in site.posts %}
+                  {% for cat in post.categories %}
+                  {% if cat == 'work' %}
+                  <li>{{post.excerpt}}</li>
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </table>
+
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"></table>
           <!-- PUBLICATIONS -->
           <tr>
@@ -133,31 +157,6 @@
           {% endif %}
           {% endfor %}
           {% endfor %}
-        </table>
-
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-
-          <!-- WORK EXPERIENCE -->
-          <tr>
-            <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>Work Experience</h2>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div>
-                <ul>
-                  {% for post in site.posts %}
-                  {% for cat in post.categories %}
-                  {% if cat == 'work' %}
-                  <li>{{post.excerpt}}</li>
-                  {% endif %}
-                  {% endfor %}
-                  {% endfor %}
-                </ul>
-              </div>
-            </td>
-          </tr>
         </table>
         
         
