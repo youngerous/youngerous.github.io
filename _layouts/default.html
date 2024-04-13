@@ -89,11 +89,8 @@
           {% for cat in post.categories %}
           {% if cat == 'work' %}
           <tr>
-            <td style="padding:2.5%;width:55%;vertical-align:text-top">
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
               {{post.excerpt}}
-            </td>
-            <td style="padding:2.5%;width:45%;vertical-align:text-top;">
-              {{post.period}}
             </td>
           </tr>
           {% endif %}
