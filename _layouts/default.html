@@ -89,12 +89,13 @@
           {% for cat in post.categories %}
           {% if cat == 'work' %}
             <tr>
-              <td style="padding:2.5%;width:70%">
+              <td style="padding:2.5%;width:65%">
                 <h3>{{post.company}}</h3><br>
-                {{post.position}} {% if post.team %}at {{post.team}}{% endif %}<br>
+                {{post.position}} {% if post.team %}at {{post.team}}{% endif %}
+
                 {% if post.excerpt %}{{post.excerpt}}{% endif %}
               </td>
-              <td style="padding:2.5%;width:30%;vertical-align:text-top;text-align:right;">
+              <td style="padding:2.5%;width:35%;vertical-align:text-top;text-align:right;">
                 {{post.period}}
               </td>
             </tr>
