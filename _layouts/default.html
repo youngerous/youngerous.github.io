@@ -92,9 +92,9 @@
               <td style="padding:2.5%;width:70%">
                 <h3>{{post.company}}</h3><br>
                 {{post.position}} {% if post.team %}at {{post.team}}{% endif %}<br>
-                {% if post.excerpt %}({{post.excerpt}}){% endif %}
+                {% if post.excerpt %}{{post.excerpt}}{% endif %}
               </td>
-              <td style="padding:2.5%;width:30%;text-align:right;">
+              <td style="padding:2.5%;width:30%;vertical-align:text-top;text-align:right;">
                 {{post.period}}
               </td>
             </tr>
