@@ -90,10 +90,8 @@
           {% if cat == 'work' %}
           <tr>
             <td style="padding:2.5%;width:55%;vertical-align:text-top">
-              <h3>{{post.company}}</h3><br>  
-              {{post.position}} {% if post.team %}at {{post.team}}{% endif %}<br>
-              {% if post.mentor %}Mentor: {{post.mentor}}{% endif %}
-              {% if post.mentors %}Mentors: {{post.mentors}}{% endif %}
+              <h3>{{post.company}}</h3>
+              <p>{% if post.excerpt %}{{post.excerpt}}{% endif %}</p>
             </td>
             <td style="padding:2.5%;width:45%;vertical-align:text-top;text-align:right;">
               {{post.period}}
