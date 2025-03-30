@@ -6,7 +6,7 @@ date:  2025-01-31 00:00:00 +00:00
 categories: research
 author: "Takyoung Kim"
 venue: "Preprint"
-authors: "Sagnik Mukherjee, Abhinav Chinta, <u>Takyoung Kim</u>, Tarun Anoop Sharma, Dilek Hakkani-Tür"
+authors: "Sagnik Mukherjee*, Abhinav Chinta*, <u>Takyoung Kim</u>, Tarun Anoop Sharma, Dilek Hakkani-Tür"
 subtitle: ""
 link: https://arxiv.org/abs/2502.02362
 ---
