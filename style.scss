@@ -30,31 +30,33 @@ th,
 tr,
 p,
 a {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Raleway', Verdana, Helvetica, sans-serif;
   font-size: 15px;
+  font-weight: 300;  // 기본 굵기를 300으로 줄임 (기존 normal보다 얇음)
   font-display: auto;
 }
 
 strong {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Raleway', Verdana, Helvetica, sans-serif;
   font-size: 15px;
+  font-weight: 500;  // strong 태그는 500으로 설정
   font-display: auto;
 }
 
 h2 {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Raleway', Verdana, Helvetica, sans-serif;
   font-size: 22px;
+  font-weight: 400;  // h2는 400으로 설정
   font-display: auto;
-  font-weight: normal;
   padding: 0px;
   margin: 0px;
   display:inline; 
 }
 
 h3 {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Raleway', Verdana, Helvetica, sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;  // h3는 600으로 설정 (기존 700보다 얇음)
   font-display: auto;
   padding: 0px;
   margin: 0px;
@@ -62,9 +64,9 @@ h3 {
 }
 
 h1 {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Raleway', Verdana, Helvetica, sans-serif;
   font-size: 32px;
-  font-weight: normal;
+  font-weight: 400;  // h1은 400으로 설정
   font-display: auto;
   text-align: center;
   padding: 0px;
@@ -72,7 +74,6 @@ h1 {
   margin-block-end: 14px;
   margin-left: 0px;
   margin-right: 0px;
-
 }
 
 .one {
