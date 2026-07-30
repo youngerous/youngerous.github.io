@@ -9,5 +9,6 @@ venue: "Preprint"
 authors: "<u>Takyoung Kim</u>*, Kang-wook Kim*, Sang Hoon Woo, Julia Hirschberg, Gunhee Kim, Dilek Hakkani-Tür"
 subtitle: ""
 link: https://arxiv.org/abs/2607.26178
+website: https://duplexgen.github.io
 ---
 
