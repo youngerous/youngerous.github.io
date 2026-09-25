@@ -1,0 +1,11 @@
+<div class="contact-item">
+  <span class="contact-label">Contact ({{ include.label }})</span>
+  <span class="contact-address">{{ include.address }}</span>
+  <button class="copy-email" type="button" data-email="{{ include.email }}" aria-label="Copy {{ include.label | downcase }} email address" title="Copy email address" hidden>
+    <svg class="copy-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+    <svg class="copied-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+  </button>
+  <label class="copy-fallback" hidden>Copy manually:
+    <input type="text" value="{{ include.email }}" readonly aria-label="{{ include.label }} email address to copy">
+  </label>
+</div>

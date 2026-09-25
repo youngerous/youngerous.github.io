@@ -6,6 +6,18 @@ The website design is just a modification of [Jon Barron's website](https://jonb
 
 
 
+## Local preview
+
+Run from the project directory using the Ruby environment managed by rbenv:
+
+```bash
+rbenv exec bundle exec jekyll serve --livereload --host 127.0.0.1
+```
+
+Open [http://127.0.0.1:4000](http://127.0.0.1:4000). Saving changes automatically rebuilds the site and refreshes the browser. Press `Ctrl+C` to stop the server.
+
+If dependencies have not been installed, run `rbenv exec bundle install` first.
+
 ## issues
 * In general, jekyll will try to build a full page for every post. I skip that by forcing `permalink: /`. This creates multiple entries in sitemap.xml for index.html but is otherwise fine. 
 * If you want multiple paragraphs, consider using `excerpt_separator: <!--more-->` in `_config.yml`, for my own use I didn't need this. 

@@ -1,0 +1,14 @@
+{% assign excerpt = include.post.excerpt | append: '' %}
+{% assign date_prefix = excerpt | split: '</strong>' | first %}
+{% assign date_label = date_prefix | strip_html | strip %}
+{% if date_label contains '[' and date_label contains ']' %}
+  {% assign date_markup = date_prefix | remove_first: '<p>' | append: '</strong>' %}
+  {% assign news_body = excerpt | remove_first: date_markup %}
+{% else %}
+  {% assign date_label = include.post.date | date: '%b %Y' %}
+  {% assign news_body = excerpt %}
+{% endif %}
+<li class="news-item">
+  <time class="news-date" datetime="{{ include.post.date | date: '%Y-%m' }}">{{ date_label | remove: '[' | remove: ']' }}</time>
+  <div class="news-copy">{{ news_body }}</div>
+</li>
