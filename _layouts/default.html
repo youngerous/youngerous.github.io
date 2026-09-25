@@ -29,13 +29,18 @@
 </head>
 
 <body>
+  <nav class="section-nav" aria-label="Page sections">
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#publications">Publications</a>
+  </nav>
   <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tr style="padding:0px">
       <td style="padding:0px">
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-          <!-- BIO -->
-          <tr style="padding:0px">
-            <td style="padding:2.5%;width:60%;vertical-align:middle">
+        <section class="bio" id="about" aria-label="About Takyoung Kim" tabindex="-1">
+            <div class="bio-copy">
               <h1 style="display: inline;"> Takyoung Kim </h1> <span>김탁영 (金卓映)</span> <br>
               <p>Hello! I am a Ph.D. Candidate in <a target="_blank" href="https://uiuc-conversational-ai-lab.github.io">Conversational AI Lab</a> at the <a target="_blank" href="https://illinois.edu/">University of Illinois Urbana-Champaign</a> <a target="_blank" href="https://siebelschool.illinois.edu/">Computer Science</a>, advised by <a target="_blank" href="https://scholar.google.com/citations?user=GMcL_9kAAAAJ">Prof. Dilek Hakkani-Tür</a>. Previously I received my Master's degree at Korea University, advised by <a target="_blank" href="https://scholar.google.com/citations?user=I2pcWZIAAAAJ">Prof. Pilsung Kang</a>.
               </p>
@@ -49,19 +54,18 @@
                 Contact (Affiliation): tk30 [at] illinois [dot] edu <br>
                 Contact (Personal): takyoung.ai [at] gmail [dot] com 
               </p>
-              <p style="text-align:center">
-                <a target="_blank" href="https://youngerous.github.io/assets/CV_Takyoung_Kim.pdf"> CV</a> &nbsp;|&nbsp;
-                <a target="_blank" href="https://github.com/youngerous">GitHub</a> &nbsp;|&nbsp;
-                <a target="_blank" href="https://scholar.google.com/citations?user=k-x2xGsAAAAJ&hl=en">Google Scholar</a> &nbsp;|&nbsp;
-                <a target="_blank" href="https://www.linkedin.com/in/takyoung"> LinkedIn </a> &nbsp;|&nbsp;
+              <p class="profile-links">
+                <a target="_blank" href="https://youngerous.github.io/assets/CV_Takyoung_Kim.pdf"> CV</a>
+                <a target="_blank" href="https://github.com/youngerous">GitHub</a>
+                <a target="_blank" href="https://scholar.google.com/citations?user=k-x2xGsAAAAJ&hl=en">Google Scholar</a>
+                <a target="_blank" href="https://www.linkedin.com/in/takyoung"> LinkedIn </a>
                 <a target="_blank" href="https://x.com/takyoung_kim"> X </a>
               </p>
-            </td>
-            <td style="padding:2.5%;width:40%;max-width:40%">
-              <img style="width:70%;max-width:100%" alt="profile photo" src="images/profile.png">
-            </td>
-          </tr>
-        </table>
+            </div>
+            <div class="bio-photo">
+              <img alt="Takyoung Kim" src="{{ site.baseurl }}/images/profile.png">
+            </div>
+        </section>
 
         <!-- <hr color="#c7c7c7" size="0.5" style="width:95%"> -->
         
@@ -69,7 +73,7 @@
           <!-- NEWS -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 News</h2>
+              <h2 id="news" tabindex="-1">📍 News</h2>
             </td>
           </tr>
           <tr>
@@ -95,8 +99,9 @@
           <!-- WORK EXPERIENCE -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Work Experience</h2>
+              <h2 id="experience" tabindex="-1">📍 Work Experience</h2>
             </td>
+          </tr>
           {% for post in site.posts %}
           {% for cat in post.categories %}
           {% if cat == 'work' %}
@@ -116,8 +121,9 @@
           <!-- EDUCATION -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Education</h2>
+              <h2 id="education" tabindex="-1">📍 Education</h2>
             </td>
+          </tr>
           {% for post in site.posts %}
           {% for cat in post.categories %}
           {% if cat == 'school' %}
@@ -133,11 +139,11 @@
 
         <!-- <hr color="#c7c7c7" size="0.5" style="width:95%"> -->
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"></table>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <!-- PUBLICATIONS -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Publications</h2> (*, † = Equal Contribution)
+              <h2 id="publications" tabindex="-1">📍 Publications</h2> (*, † = Equal Contribution)
             </td>
           </tr>
           {% for post in site.posts %}
