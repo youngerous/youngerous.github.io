@@ -29,6 +29,13 @@
 </head>
 
 <body>
+  <nav class="section-nav" aria-label="Page sections">
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#publications">Publications</a>
+  </nav>
   <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
     <tr style="padding:0px">
       <td style="padding:0px">
@@ -36,7 +43,7 @@
           <!-- BIO -->
           <tr style="padding:0px">
             <td style="padding:2.5%;width:60%;vertical-align:middle">
-              <h1 style="display: inline;"> Takyoung Kim </h1> <span>김탁영 (金卓映)</span> <br>
+              <h1 id="about" tabindex="-1" style="display: inline;"> Takyoung Kim </h1> <span>김탁영 (金卓映)</span> <br>
               <p>Hello! I am a Ph.D. Candidate in <a target="_blank" href="https://uiuc-conversational-ai-lab.github.io">Conversational AI Lab</a> at the <a target="_blank" href="https://illinois.edu/">University of Illinois Urbana-Champaign</a> <a target="_blank" href="https://siebelschool.illinois.edu/">Computer Science</a>, advised by <a target="_blank" href="https://scholar.google.com/citations?user=GMcL_9kAAAAJ">Prof. Dilek Hakkani-Tür</a>. Previously I received my Master's degree at Korea University, advised by <a target="_blank" href="https://scholar.google.com/citations?user=I2pcWZIAAAAJ">Prof. Pilsung Kang</a>.
               </p>
               <p>
@@ -69,7 +76,7 @@
           <!-- NEWS -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 News</h2>
+              <h2 id="news" tabindex="-1">📍 News</h2>
             </td>
           </tr>
           <tr>
@@ -95,7 +102,7 @@
           <!-- WORK EXPERIENCE -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Work Experience</h2>
+              <h2 id="experience" tabindex="-1">📍 Work Experience</h2>
             </td>
           {% for post in site.posts %}
           {% for cat in post.categories %}
@@ -116,7 +123,7 @@
           <!-- EDUCATION -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Education</h2>
+              <h2 id="education" tabindex="-1">📍 Education</h2>
             </td>
           {% for post in site.posts %}
           {% for cat in post.categories %}
@@ -137,7 +144,7 @@
           <!-- PUBLICATIONS -->
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>📍 Publications</h2> (*, † = Equal Contribution)
+              <h2 id="publications" tabindex="-1">📍 Publications</h2> (*, † = Equal Contribution)
             </td>
           </tr>
           {% for post in site.posts %}

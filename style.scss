@@ -96,6 +96,55 @@ span.highlight {
   background-color: #ffffd0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto 8px;
+  padding: 8px 0;
+  overflow-x: auto;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.section-nav a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: 6px;
+}
+
+.section-nav a:first-child {
+  margin-left: auto;
+}
+
+.section-nav a:last-child {
+  margin-right: auto;
+}
+
+.section-nav a:hover {
+  background: #f2f7f2;
+}
+
+.section-nav a:focus-visible {
+  outline: 2px solid #008000;
+  outline-offset: 2px;
+}
+
+h1[id],
+h2[id] {
+  scroll-margin-top: 88px;
+}
+
 .back-to-top {
   position: fixed;
   right: 24px;
@@ -142,6 +191,10 @@ span.highlight {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .back-to-top {
     transition: none;
   }
