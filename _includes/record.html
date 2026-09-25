@@ -1,6 +1,6 @@
 <div class="record">
   <div class="record-heading">
-    <h3>{{ include.post.organization }}</h3>
+    <h3{% if include.post.logo %} class="record-organization"{% endif %}>{% if include.post.logo %}<img class="organization-logo" src="{{ include.post.logo | relative_url }}" width="24" height="24" alt="" loading="lazy" decoding="async"><span>{{ include.post.organization }}</span>{% else %}{{ include.post.organization }}{% endif %}</h3>
     <p class="record-period">{{ include.post.period }}</p>
   </div>
   <div class="record-description">{{ include.post.excerpt }}</div>

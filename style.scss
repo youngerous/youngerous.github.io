@@ -164,7 +164,8 @@ h2 { font: 400 2.25rem/1.2 var(--serif); letter-spacing: -0.035em; overflow-wrap
 .news-scroll::-webkit-scrollbar-track { background: var(--soft); border-radius: 3px; }
 .news-scroll::-webkit-scrollbar-thumb { background: #acb9b0; border: 2px solid var(--soft); border-radius: 8px; }
 .news-scroll::-webkit-scrollbar-thumb:hover { background: #7e9285; }
-@supports not selector(::-webkit-scrollbar) {
+// Interpolate the selector query for GitHub Pages' Ruby Sass 3.7 compatibility.
+@supports not #{"selector(::-webkit-scrollbar)"} {
   .news-scroll { scrollbar-width: thin; scrollbar-color: #acb9b0 var(--soft); }
 }
 
@@ -210,6 +211,8 @@ h2 { font: 400 2.25rem/1.2 var(--serif); letter-spacing: -0.035em; overflow-wrap
 .record + .record { margin-top: 26px; padding-top: 26px; border-top: 1px solid #edf0ee; }
 .record-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 20px; margin-bottom: 5px; }
 .record-heading h3 { flex: 1 1 18rem; font-size: 1.0625rem; line-height: 1.6; color: var(--ink); }
+.record-organization { position: relative; padding-left: 33px; }
+.organization-logo { position: absolute; top: 2px; left: 0; width: 24px; height: 24px; object-fit: contain; }
 .record-period { color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .record-description { overflow-wrap: break-word; }
 
