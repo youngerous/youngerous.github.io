@@ -5,7 +5,7 @@ title: "DuplexGen: Adaptive Synthesis of Human–AI Turn-Taking Dialogues"
 categories: research
 author: "Takyoung Kim"
 date: 2026-08-01 00:00:00 +00:00
-venue: "EMNLP"
+venue: "EMNLP (<strong>Oral Presentation</strong>)"
 authors: "<u>Takyoung Kim</u>*, Kang-wook Kim*, Sang Hoon Woo, Julia Hirschberg, Gunhee Kim, Dilek Hakkani-Tür"
 subtitle: ""
 link: https://arxiv.org/abs/2607.26178
