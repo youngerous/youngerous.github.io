@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <script src="{{ site.baseurl }}/assets/reload-home.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-00QR3KNQQD"></script>
   <script>
@@ -12,7 +13,7 @@
       gtag('config', 'G-00QR3KNQQD');
   </script>
   
-  {% assign profile_title = site.name | append: ' — Human-Centered Conversational AI' %}
+  {% assign profile_title = site.name %}
   {% assign profile_description = 'Ph.D. Candidate at UIUC researching human–AI communication, conversational agents, and personalized assistance.' %}
   {% assign profile_url = page.url | replace: 'index.html', '' | absolute_url %}
   <title>{{ profile_title | escape }}</title>
@@ -104,7 +105,8 @@
       <div class="news-panel">
         <div class="news-scroll" role="region" aria-labelledby="news" tabindex="0">
           <ul class="news-list">
-            {% for post in site.categories.news %}
+            {% assign entries = site.news | sort: 'date' | reverse %}
+        {% for post in entries %}
             {% include news-item.html post=post %}
             {% endfor %}
           </ul>
@@ -117,7 +119,8 @@
         <h2 id="experience" tabindex="-1">Work<br class="desktop-break"> Experience</h2>
       </div>
       <div class="record-list">
-        {% for post in site.categories.work %}
+        {% assign entries = site.work | sort: 'date' | reverse %}
+        {% for post in entries %}
         {% include record.html post=post %}
         {% endfor %}
       </div>
@@ -130,36 +133,28 @@
         </div>
         <p class="section-note">*, † = Equal Contribution</p>
       </div>
+      {% assign publications = site.research | sort: 'date' | reverse %}
+      {% assign publication_groups = publications | group_by: 'publication_year' | sort: 'name' | reverse %}
       <nav class="publication-years" aria-label="Publication years">
-        {% assign previous_link_year = '' %}
-        {% for post in site.categories.research %}
-          {% assign link_year = post.date | date: '%Y' %}
-          {% if link_year != previous_link_year %}
-            <a href="#publications-{{ link_year }}">{{ link_year }}</a>
-            {% assign previous_link_year = link_year %}
-          {% endif %}
+        {% for group in publication_groups %}
+          <a href="#publications-{{ group.name }}">{{ group.name }}</a>
         {% endfor %}
       </nav>
-      {% assign previous_year = '' %}
-      {% for post in site.categories.research %}
-        {% assign year = post.date | date: '%Y' %}
-        {% if year != previous_year %}
-          {% unless forloop.first %}</div></div>{% endunless %}
+      {% for group in publication_groups %}
           <div class="publication-year">
-            <h3 class="year-label" id="publications-{{ year }}" tabindex="-1">{{ year }}</h3>
+            <h3 class="year-label" id="publications-{{ group.name }}" tabindex="-1">{{ group.name }}</h3>
             <div class="publication-list">
-          {% assign previous_year = year %}
-        {% endif %}
+              {% for post in group.items %}
               <article class="publication">
                 <h4>{% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>{% else %}{{ post.title }}{% endif %}</h4>
                 <p class="authors">{{ post.authors }}</p>
                 <div class="venue">
-                  <span class="venue-citation">{{ post.venue }} · {{ post.date | date: '%Y' }}</span>
+                  <span class="venue-citation">{{ post.venue }} · {{ post.publication_year }}</span>
                   {% for highlight in post.highlights %}
                   <strong class="venue-badge{% if highlight.type == 'award' %} award-badge{% endif %}">{{ highlight.label }}</strong>
                   {% endfor %}
                 </div>
-                {% if post.venue2 %}<div class="venue"><span class="venue-citation">{{ post.venue2 }} · {{ post.date2 }}</span></div>{% endif %}
+                {% if post.venue2 %}<div class="venue"><span class="venue-citation">{{ post.venue2 }} · {{ post.publication_year2 }}</span></div>{% endif %}
                 <div class="paper-links">
                   {% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a>{% endif %}
                   {% if post.video %}<a href="{{ post.video }}" target="_blank" rel="noopener noreferrer">Video <span aria-hidden="true">↗</span></a>{% endif %}
@@ -170,7 +165,9 @@
                   {% if post.youtube %}<a href="{{ post.youtube }}" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
                 </div>
               </article>
-        {% if forloop.last %}</div></div>{% endif %}
+              {% endfor %}
+            </div>
+          </div>
       {% endfor %}
     </section>
 
@@ -179,7 +176,8 @@
         <h2 id="education" tabindex="-1">Education</h2>
       </div>
       <div class="record-list">
-        {% for post in site.categories.school %}
+        {% assign entries = site.school | sort: 'date' | reverse %}
+        {% for post in entries %}
         {% include record.html post=post %}
         {% endfor %}
       </div>

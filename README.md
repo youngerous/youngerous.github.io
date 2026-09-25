@@ -6,21 +6,54 @@ The website design is just a modification of [Jon Barron's website](https://jonb
 
 
 
-## Local preview
+## Local preview and build
 
-Run from the project directory using the Ruby environment managed by rbenv:
+The Gemfile pins `github-pages` to version 232, matching the branch-based GitHub Pages build (Jekyll 3.10.0 and Ruby Sass 3.7.4). Commit both `Gemfile` and `Gemfile.lock`. The [GitHub Pages dependency list](https://pages.github.com/versions/) is the reference when upgrading.
+
+Run from the project directory using Ruby 3.3.x managed by rbenv:
 
 ```bash
+rbenv exec bundle install
 rbenv exec bundle exec jekyll serve --livereload --host 127.0.0.1
 ```
 
-Open [http://127.0.0.1:4000](http://127.0.0.1:4000). Saving changes automatically rebuilds the site and refreshes the browser. Press `Ctrl+C` to stop the server.
+Open [http://127.0.0.1:4000](http://127.0.0.1:4000). Saving changes rebuilds the site and refreshes the browser. Press `Ctrl+C` to stop it. Restart the server after dependency or `_config.yml` changes.
 
-If dependencies have not been installed, run `rbenv exec bundle install` first.
+Build and validate before pushing:
 
-## issues
-* In general, jekyll will try to build a full page for every post. I skip that by forcing `permalink: /`. This creates multiple entries in sitemap.xml for index.html but is otherwise fine. 
-* If you want multiple paragraphs, consider using `excerpt_separator: <!--more-->` in `_config.yml`, for my own use I didn't need this. 
-* My own posts have lots of extra stuff left over from my old jekyll design ("author", long descriptions, etc.), feel free to ignore them
-* I use thumbnails, so I can upload arbitrary sized images but then only display small ones. The `_make_thumbnails.sh` script generates them and the html template looks in `tn/` for all images. 
-* I have three categories of post with slightly differerent formatting, so changing sizing requires edits in multiple paces. 
+```bash
+rbenv exec bundle exec jekyll build --safe
+rbenv exec bundle exec ruby scripts/check-site.rb
+```
+
+The check builds into a temporary directory and verifies collection output, publication years, section counts, homepage titles, and sitemap uniqueness. GitHub Pages continues to deploy from the repository branch.
+
+## Editing content
+
+`index.html` is the homepage entry point. Its layout reads four collections with `output: false`, so entries do not generate separate pages or compete for `/index.html`:
+
+| Folder | Content |
+| --- | --- |
+| `_news/` | News |
+| `_work/` | Work experience |
+| `_research/` | Publications |
+| `_school/` | Education |
+
+Keep a `date` in each entry's front matter for ordering; entries appear newest first. The site uses `Etc/UTC` to make date formatting consistent between local and hosted builds. Existing filenames are retained for familiarity.
+
+For publications, use an integer `publication_year` for the displayed year and year navigation. `date` controls ordering within each publication year; it does not determine the displayed year. If an entry has `venue2`, set `publication_year2` for that second venue.
+
+```yaml
+---
+title: "Paper title"
+publication_year: 2026
+date: 2026-08-01 00:00:00 +00:00
+venue: "Conference or journal"
+authors: "Author list"
+link: https://example.com/paper
+---
+```
+
+Add news, work, and education descriptions below the front matter in Markdown. School and company logo paths use the optional `logo` field. The homepage preserves the existing excerpt-based descriptions; use `excerpt_separator` if an entry needs multiple paragraphs.
+
+Browser-tab and social-sharing titles use `name` from `_config.yml`.
