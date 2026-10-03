@@ -1,6 +1,7 @@
 ---
 publication_year: 2026
 title: "DuplexGen: Adaptive Synthesis of Human–AI Turn-Taking Dialogues"
+tldr: "Generates full-duplex dialogue data whose turn-taking behavior adapts to each scenario using a small set of human preference annotations."
 # image: /images/none.png
 author: "Takyoung Kim"
 date: 2026-08-01 00:00:00 +00:00

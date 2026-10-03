@@ -40,9 +40,11 @@ Dir.mktmpdir('academic-site-check-') do |destination|
   papers.each do |paper|
     year = paper.data['publication_year']
     check(year.is_a?(Integer) && (1900..2100).cover?(year), "Invalid publication_year: #{paper.relative_path}")
+    check(!paper.data['tldr'].to_s.strip.empty?, "Missing tldr: #{paper.relative_path}")
     group = html.at_css("#publications-#{year}")&.parent
     article = group&.css('.publication')&.find { |node| normalized(node.at_css('h4').text) == normalized(paper.data['title']) }
     check(article, "Paper missing from its publication year: #{paper.data['title']}")
+    check(normalized(article.at_css('.tldr-copy')&.text.to_s) == normalized(paper.data['tldr']), "Incorrect tldr: #{paper.data['title']}")
     check(normalized(article.at_css('.venue-citation').text).end_with?("· #{year}"), 'Incorrect citation year')
     if paper.data['venue2']
       year2 = paper.data['publication_year2']

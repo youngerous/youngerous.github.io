@@ -53,7 +53,10 @@
         <a href="#publications">Publications</a>
         <a href="#education">Education</a>
       </nav>
-      <a class="header-cv" href="{{ site.baseurl }}/assets/CV_Takyoung_Kim.pdf" target="_blank" rel="noopener noreferrer" aria-label="View curriculum vitae (PDF)">CV <span aria-hidden="true">↗</span></a>
+<a class="header-cv" href="{{ site.baseurl }}/assets/CV_Takyoung_Kim.pdf" target="_blank" rel="noopener noreferrer" aria-label="View curriculum vitae (PDF)">
+  <span class="header-cv-icon" aria-hidden="true">{% include profile-icon.html name='cv' %}</span>
+  <span class="header-cv-label">CV</span>
+</a>
     </div>
   </header>
 
@@ -76,11 +79,11 @@
               </p>
         </div>
         <div class="profile-links" aria-label="Professional profiles">
-          <a target="_blank" rel="noopener noreferrer" href="https://youngerous.github.io/assets/CV_Takyoung_Kim.pdf">Curriculum vitae <span aria-hidden="true">↗</span></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://github.com/youngerous">GitHub <span aria-hidden="true">↗</span></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://scholar.google.com/citations?user=k-x2xGsAAAAJ&hl=en">Google Scholar <span aria-hidden="true">↗</span></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/takyoung">LinkedIn <span aria-hidden="true">↗</span></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://x.com/takyoung_kim">X <span aria-hidden="true">↗</span></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://youngerous.github.io/assets/CV_Takyoung_Kim.pdf"><span class="profile-icon">{% include profile-icon.html name='cv' %}</span><span>Curriculum Vitae</span></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/youngerous"><span class="profile-icon">{% include profile-icon.html name='github' %}</span><span>GitHub</span></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://scholar.google.com/citations?user=k-x2xGsAAAAJ&hl=en"><span class="profile-icon">{% include profile-icon.html name='scholar' %}</span><span>Google Scholar</span></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/takyoung"><span class="profile-icon">{% include profile-icon.html name='linkedin' %}</span><span>LinkedIn</span></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://x.com/takyoung_kim"><span class="profile-icon">{% include profile-icon.html name='x' %}</span><span>X</span></a>
         </div>
       </div>
       <div class="profile">
@@ -155,14 +158,23 @@
                   {% endfor %}
                 </div>
                 {% if post.venue2 %}<div class="venue"><span class="venue-citation">{{ post.venue2 }} · {{ post.publication_year2 }}</span></div>{% endif %}
-                <div class="paper-links">
-                  {% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.video %}<a href="{{ post.video }}" target="_blank" rel="noopener noreferrer">Video <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.code %}<a href="{{ post.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.poster %}<a href="{{ post.poster }}" target="_blank" rel="noopener noreferrer">Poster <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.slide %}<a href="{{ post.slide }}" target="_blank" rel="noopener noreferrer">Slides <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.website %}<a href="{{ post.website }}" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a>{% endif %}
-                  {% if post.youtube %}<a href="{{ post.youtube }}" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
+                {% assign tldr_id = 'tldr-' | append: group.name | append: '-' | append: forloop.index %}
+                <div class="paper-actions">
+                  <div class="paper-links">
+                    {% if post.tldr %}
+                    <button class="tldr-toggle" type="button" aria-expanded="false" aria-controls="{{ tldr_id }}">TL;DR</button>
+                    {% endif %}
+                    {% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.video %}<a href="{{ post.video }}" target="_blank" rel="noopener noreferrer">Video <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.code %}<a href="{{ post.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.poster %}<a href="{{ post.poster }}" target="_blank" rel="noopener noreferrer">Poster <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.slide %}<a href="{{ post.slide }}" target="_blank" rel="noopener noreferrer">Slides <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.website %}<a href="{{ post.website }}" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a>{% endif %}
+                    {% if post.youtube %}<a href="{{ post.youtube }}" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
+                  </div>
+                  {% if post.tldr %}
+                  <p class="tldr-copy" id="{{ tldr_id }}" hidden>{{ post.tldr }}</p>
+                  {% endif %}
                 </div>
               </article>
               {% endfor %}

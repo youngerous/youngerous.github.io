@@ -59,4 +59,64 @@
       }
     });
   });
+
+  document.querySelectorAll('.tldr-toggle').forEach(button => {
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+    if (!panel) return;
+
+    let previewTimer;
+    const isOpen = () => button.getAttribute('aria-expanded') === 'true';
+
+    const showPreview = () => {
+      if (isOpen()) return;
+      clearTimeout(previewTimer);
+      panel.hidden = false;
+      panel.classList.add('is-preview');
+      panel.classList.remove('is-open');
+    };
+
+    const hidePreview = () => {
+      clearTimeout(previewTimer);
+      previewTimer = setTimeout(() => {
+        if (isOpen()) return;
+        panel.hidden = true;
+        panel.classList.remove('is-preview');
+      }, 100);
+    };
+
+    const openPanel = () => {
+      clearTimeout(previewTimer);
+      button.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      panel.classList.remove('is-preview');
+      panel.classList.add('is-open');
+    };
+
+    const closePanel = () => {
+      clearTimeout(previewTimer);
+      button.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+      panel.classList.remove('is-preview', 'is-open');
+    };
+
+    button.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'mouse') showPreview();
+    });
+    button.addEventListener('pointerleave', event => {
+      if (event.pointerType === 'mouse') hidePreview();
+    });
+    panel.addEventListener('pointerenter', () => clearTimeout(previewTimer));
+    panel.addEventListener('pointerleave', hidePreview);
+    button.addEventListener('focus', showPreview);
+    button.addEventListener('blur', hidePreview);
+    button.addEventListener('click', () => {
+      if (isOpen()) closePanel();
+      else openPanel();
+    });
+    button.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || !isOpen()) return;
+      event.preventDefault();
+      closePanel();
+    });
+  });
 })();

@@ -46,6 +46,7 @@ For publications, use an integer `publication_year` for the displayed year and y
 ```yaml
 ---
 title: "Paper title"
+tldr: "One plain-language sentence explaining the paper's core contribution."
 publication_year: 2026
 date: 2026-08-01 00:00:00 +00:00
 venue: "Conference or journal"
