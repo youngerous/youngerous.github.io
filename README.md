@@ -26,7 +26,7 @@ rbenv exec bundle exec jekyll build --safe
 rbenv exec bundle exec ruby scripts/check-site.rb
 ```
 
-The check builds into a temporary directory and verifies collection output, publication years, section counts, homepage titles, and sitemap uniqueness. GitHub Pages continues to deploy from the repository branch.
+The check builds into a temporary directory and verifies collection output, publication order and years, section counts, homepage titles, and sitemap uniqueness. GitHub Pages continues to deploy from the repository branch.
 
 ## Editing content
 
@@ -41,13 +41,16 @@ The check builds into a temporary directory and verifies collection output, publ
 
 Keep a `date` in each entry's front matter for ordering; entries appear newest first. The site uses `Etc/UTC` to make date formatting consistent between local and hosted builds. Existing filenames are retained for familiarity.
 
-For publications, use an integer `publication_year` for the displayed year and year navigation. `date` controls ordering within each publication year; it does not determine the displayed year. If an entry has `venue2`, set `publication_year2` for that second venue.
+For publications, use an integer `publication_year` for the year shown in the citation line; papers are listed newest year first. `date` controls ordering within each publication year; it does not determine the displayed year. If an entry has `venue2`, set `publication_year2` for that second venue.
+
+Add `selected: true` to show a paper in the default **Selected** view of the Publications section; the **All** view lists every paper. Without JavaScript, every paper is shown.
 
 ```yaml
 ---
 title: "Paper title"
 tldr: "One plain-language sentence explaining the paper's core contribution."
 publication_year: 2026
+selected: true  # optional
 date: 2026-08-01 00:00:00 +00:00
 venue: "Conference or journal"
 authors: "Author list"

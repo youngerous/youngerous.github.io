@@ -36,8 +36,17 @@
   <link rel="canonical" href="{{ profile_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+  <script>
+    // Apply a saved theme before first paint to avoid a light/dark flash.
+    try {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+    } catch {}
+  </script>
   
 </head>
 
@@ -53,6 +62,10 @@
         <a href="#education">Education</a>
         <a href="#publications">Publications</a>
       </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5a8.5 8.5 0 1 0 10.6 10.6Z" /></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+      </button>
 <a class="header-cv" href="{{ site.baseurl }}/assets/CV_Takyoung_Kim.pdf" target="_blank" rel="noopener noreferrer" aria-label="View curriculum vitae (PDF)">
   <span class="header-cv-icon" aria-hidden="true">{% include profile-icon.html name='cv' %}</span>
   <span class="header-cv-label">CV</span>
@@ -78,10 +91,10 @@
           <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/takyoung"><span class="profile-icon">{% include profile-icon.html name='linkedin' %}</span><span>LinkedIn</span></a>
           <a target="_blank" rel="noopener noreferrer" href="https://x.com/takyoung_kim"><span class="profile-icon">{% include profile-icon.html name='x' %}</span><span>X</span></a>
         </div>
-        <div class="contact-details" aria-label="Contact details">
-          <span class="contact-heading">Contact</span>
-          {% include contact.html label="Affiliation" address="tk30 [at] illinois [dot] edu" email="tk30@illinois.edu" %}
-          {% include contact.html label="Personal" address="takyoung.ai [at] gmail [dot] com" email="takyoung.ai@gmail.com" %}
+        <div class="contact-details" aria-label="Email">
+          <span class="profile-icon contact-icon" aria-hidden="true">{% include profile-icon.html name='email' %}</span>
+          {% include contact.html label="Affiliation" email="tk30@illinois.edu" %}
+          {% include contact.html label="Personal" email="takyoung.ai@gmail.com" %}
           <span class="sr-only" id="copy-status" role="status" aria-live="polite"></span>
         </div>
       </div>
@@ -145,70 +158,63 @@
       </div>
     </section>
 
-    <section class="content-section publications" aria-labelledby="publications">
-      <div class="publications-heading">
-        <div class="section-heading">
-          <h2 id="publications" tabindex="-1">Publications</h2>
+    {% assign publications = site.research | sort: 'date' | reverse %}
+    {% assign selected_publications = publications | where: 'selected', true %}
+    {% assign publication_groups = publications | group_by: 'publication_year' | sort: 'name' | reverse %}
+    <section class="content-section section-grid publications" aria-labelledby="publications" data-view="all">
+      <div class="section-heading">
+        <h2 id="publications" tabindex="-1">Publications</h2>
+        <div class="publication-filter" role="group" aria-label="Publications to show" hidden>
+          <button type="button" data-view="selected" aria-pressed="false">Selected <span class="filter-count">{{ selected_publications.size }}</span></button>
+          <button type="button" data-view="all" aria-pressed="true">All <span class="filter-count">{{ publications.size }}</span></button>
         </div>
         <p class="section-note">*, † = Equal Contribution</p>
       </div>
-      {% assign publications = site.research | sort: 'date' | reverse %}
-      {% assign publication_groups = publications | group_by: 'publication_year' | sort: 'name' | reverse %}
-      <nav class="publication-years" aria-label="Publication years">
+      <div class="publication-list">
         {% for group in publication_groups %}
-          <a href="#publications-{{ group.name }}">{{ group.name }}</a>
-        {% endfor %}
-      </nav>
-      {% for group in publication_groups %}
-          <div class="publication-year">
-            <h3 class="year-label" id="publications-{{ group.name }}" tabindex="-1">{{ group.name }}</h3>
-            <div class="publication-list">
-              {% for post in group.items %}
-              <article class="publication">
-                <h4>{% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>{% else %}{{ post.title }}{% endif %}</h4>
-                <p class="authors">{{ post.authors }}</p>
-                <div class="venue">
-                  <span class="venue-citation">{{ post.venue }} · {{ post.publication_year }}</span>
-                  {% for highlight in post.highlights %}
-                  <strong class="venue-badge{% if highlight.type == 'award' %} award-badge{% endif %}">{{ highlight.label }}</strong>
-                  {% endfor %}
-                </div>
-                {% if post.venue2 %}<div class="venue"><span class="venue-citation">{{ post.venue2 }} · {{ post.publication_year2 }}</span></div>{% endif %}
-                {% if post.tldr %}
-                <div class="paper-summary">
-                  <span class="tldr-label">TL;DR</span>
-                  <p class="tldr-copy">{{ post.tldr }}</p>
-                </div>
-                {% endif %}
-                <div class="paper-actions">
-                  <div class="paper-links">
-                    {% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.video %}<a href="{{ post.video }}" target="_blank" rel="noopener noreferrer">Video <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.code %}<a href="{{ post.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.poster %}<a href="{{ post.poster }}" target="_blank" rel="noopener noreferrer">Poster <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.slide %}<a href="{{ post.slide }}" target="_blank" rel="noopener noreferrer">Slides <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.website %}<a href="{{ post.website }}" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a>{% endif %}
-                    {% if post.youtube %}<a href="{{ post.youtube }}" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
-                  </div>
-                </div>
-              </article>
+          {% for post in group.items %}
+          <article class="publication{% if post.selected %} is-selected{% endif %}">
+            <h3>{% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>{% else %}{{ post.title }}{% endif %}</h3>
+            <p class="authors">{{ post.authors }}</p>
+            <div class="venue">
+              <span class="venue-citation">{{ post.venue }} · {{ post.publication_year }}</span>
+              {% for highlight in post.highlights %}
+              <strong class="venue-badge{% if highlight.type == 'award' %} award-badge{% elsif highlight.type == 'presentation' %} presentation-badge{% endif %}">{{ highlight.label }}</strong>
               {% endfor %}
             </div>
-          </div>
-      {% endfor %}
+            {% if post.venue2 %}<div class="venue"><span class="venue-citation">{{ post.venue2 }} · {{ post.publication_year2 }}</span></div>{% endif %}
+            {% if post.tldr %}<div class="paper-summary"><span class="tldr-label">TL;DR</span> <p class="tldr-copy">{{ post.tldr }}</p></div>{% endif %}
+            <div class="paper-actions">
+              <div class="paper-links">
+                {% if post.link %}<a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.video %}<a href="{{ post.video }}" target="_blank" rel="noopener noreferrer">Video <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.code %}<a href="{{ post.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.poster %}<a href="{{ post.poster }}" target="_blank" rel="noopener noreferrer">Poster <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.slide %}<a href="{{ post.slide }}" target="_blank" rel="noopener noreferrer">Slides <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.website %}<a href="{{ post.website }}" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if post.youtube %}<a href="{{ post.youtube }}" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>{% endif %}
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        {% endfor %}
+        <div class="publication-more">
+          <button class="text-button" type="button" data-view="all">View all {{ publications.size }} publications <span aria-hidden="true">→</span></button>
+          <button class="text-button" type="button" data-view="selected">View {{ selected_publications.size }} selected publications <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
     </section>
 
     <section class="content-section section-grid" aria-labelledby="outside-research">
       <div class="section-heading">
         <h2 id="outside-research" tabindex="-1">Personal</h2>
       </div>
-      <p class="personal-note">I love sports! These days I am enjoying running 🏃‍♂️, bouldering 🧗‍♂️, and tennis 🎾.</p>
+      <p class="personal-note">I love sports! These days I am enjoying running 🏃‍♂️, swimming 🏊‍♂️, bouldering 🧗‍♂️, and tennis 🎾.</p>
     </section>
   </main>
 
   <footer class="site-footer page-shell">
-    <p>Takyoung's Website <a href="https://seoyuloh.github.io" target="_blank" rel="noopener noreferrer" aria-label="Seoyul Oh's website">🐿️</a></p>
-    <a href="#about">Back to top <span aria-hidden="true">↑</span></a>
+    <p>Takyoung's Website <a class="footer-emoji" href="https://seoyuloh.github.io" target="_blank" rel="noopener noreferrer" aria-label="Seoyul Oh's website">🐿️</a></p>
   </footer>
   <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" title="Back to top" hidden>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -218,5 +224,7 @@
   <script src="{{ site.baseurl }}/assets/back-to-top.js" defer></script>
   <script src="{{ site.baseurl }}/assets/section-nav.js" defer></script>
   <script src="{{ site.baseurl }}/assets/page-interactions.js" defer></script>
+  <script src="{{ site.baseurl }}/assets/theme-toggle.js" defer></script>
+  <script src="{{ site.baseurl }}/assets/publication-filter.js" defer></script>
 </body>
 </html>

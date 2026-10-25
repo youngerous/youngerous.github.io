@@ -41,24 +41,21 @@ Dir.mktmpdir('academic-site-check-') do |destination|
     year = paper.data['publication_year']
     check(year.is_a?(Integer) && (1900..2100).cover?(year), "Invalid publication_year: #{paper.relative_path}")
     check(!paper.data['tldr'].to_s.strip.empty?, "Missing tldr: #{paper.relative_path}")
-    group = html.at_css("#publications-#{year}")&.parent
-    article = group&.css('.publication')&.find { |node| normalized(node.at_css('h4').text) == normalized(paper.data['title']) }
-    check(article, "Paper missing from its publication year: #{paper.data['title']}")
+    article = html.css('.publication').find { |node| normalized(node.at_css('h3').text) == normalized(paper.data['title']) }
+    check(article, "Paper missing: #{paper.data['title']}")
     check(normalized(article.at_css('.tldr-copy')&.text.to_s) == normalized(paper.data['tldr']), "Incorrect tldr: #{paper.data['title']}")
     check(normalized(article.at_css('.venue-citation').text).end_with?("· #{year}"), 'Incorrect citation year')
+    check([nil, true, false].include?(paper.data['selected']), "selected must be true or false: #{paper.relative_path}")
+    check(article['class'].split.include?('is-selected') == (paper.data['selected'] == true), "Incorrect Selected state: #{paper.data['title']}")
     if paper.data['venue2']
       year2 = paper.data['publication_year2']
       check(year2.is_a?(Integer), "Missing publication_year2: #{paper.relative_path}")
       check(normalized(article.css('.venue-citation')[1].text).end_with?("· #{year2}"), 'Incorrect second venue year')
     end
   end
-  years = papers.map { |paper| paper.data['publication_year'].to_s }.uniq.sort.reverse
-  check(html.css('.publication-years a').map(&:text) == years, 'Year navigation is missing, duplicated, or unordered')
-  html.css('.publication-year').each do |group|
-    year = group.at_css('.year-label').text.to_i
-    expected = papers.select { |paper| paper.data['publication_year'] == year }.sort_by(&:date).reverse.map { |paper| normalized(paper.data['title']) }
-    check(group.css('.publication h4').map { |node| normalized(node.text) } == expected, "Incorrect paper ordering for #{year}")
-  end
+  # Newest publication_year first; date orders papers within the same year.
+  expected = papers.sort_by { |paper| [-paper.data['publication_year'], -paper.date.to_i] }.map { |paper| normalized(paper.data['title']) }
+  check(html.css('.publication h3').map { |node| normalized(node.text) } == expected, 'Incorrect publication ordering')
 
   sitemap = Nokogiri::XML(File.read(File.join(destination, 'sitemap.xml')))
   urls = sitemap.xpath('//*[local-name()="loc"]').map(&:text)

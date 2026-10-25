@@ -1,30 +1,78 @@
 (() => {
   const root = document.documentElement;
   const header = document.querySelector('.site-header');
-  const yearNav = document.querySelector('.publication-years');
+  const sectionNav = document.querySelector('.section-nav');
 
-  const updateHeaderAppearance = () => {
-    if (header) header.classList.toggle('is-scrolled', window.scrollY > 8);
+  // On phones, slide the header away while reading down and bring it back on any upward scroll.
+  const compact = window.matchMedia('(max-width: 680px)');
+  let lastScrollY = window.scrollY;
+  const setHeaderHidden = hidden => {
+    header.classList.toggle('is-hidden', hidden);
   };
+  const updateHeaderAppearance = () => {
+    if (!header) return;
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 8);
+    if (!compact.matches || header.querySelector(':focus-visible') || y <= header.offsetHeight) {
+      setHeaderHidden(false);
+    } else if (Math.abs(y - lastScrollY) > 6) {
+      setHeaderHidden(y > lastScrollY);
+    } else {
+      return;
+    }
+    lastScrollY = y;
+  };
+  // Keyboard users tabbing into the hidden header should always see it.
+  if (header) header.addEventListener('focusin', () => {
+    if (header.querySelector(':focus-visible')) setHeaderHidden(false);
+  });
+  compact.addEventListener('change', updateHeaderAppearance);
   window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
   window.addEventListener('pageshow', updateHeaderAppearance);
   updateHeaderAppearance();
 
+  // Show which edge of the section menu still hides links on narrow screens.
+  const updateNavFade = () => {
+    if (!sectionNav) return;
+    const hidden = sectionNav.scrollWidth - sectionNav.clientWidth;
+    sectionNav.classList.toggle('fade-start', sectionNav.scrollLeft > 1);
+    sectionNav.classList.toggle('fade-end', sectionNav.scrollLeft < hidden - 1);
+  };
+  if (sectionNav) sectionNav.addEventListener('scroll', updateNavFade, { passive: true });
+
   const updateLayout = () => {
+    updateNavFade();
     if (header) root.style.setProperty('--site-header-height', `${header.getBoundingClientRect().height}px`);
-    if (yearNav) root.style.setProperty('--year-nav-height', `${yearNav.getBoundingClientRect().height}px`);
   };
 
   // Measure actual bar heights so anchor headings remain visible when text is enlarged.
   if ('ResizeObserver' in window) {
     const observer = new ResizeObserver(updateLayout);
-    [header, yearNav].filter(Boolean).forEach(el => observer.observe(el));
+    if (header) observer.observe(header);
   }
   window.addEventListener('resize', updateLayout);
   window.addEventListener('pageshow', updateLayout);
   window.addEventListener('load', updateLayout);
   if (document.fonts) document.fonts.ready.then(updateLayout);
   updateLayout();
+
+  const revealTargets = [...document.querySelectorAll('.content-section > *')];
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    // Leave anything already on screen alone so the first paint never flickers.
+    revealTargets
+      .filter(el => el.getBoundingClientRect().top > window.innerHeight)
+      .forEach(el => {
+        el.classList.add('reveal');
+        revealObserver.observe(el);
+      });
+  }
 
   const status = document.getElementById('copy-status');
   document.querySelectorAll('.copy-email').forEach(button => {

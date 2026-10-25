@@ -1,5 +1,6 @@
 ---
 publication_year: 2026
+selected: true
 title: "DuplexGen: Adaptive Synthesis of Human–AI Turn-Taking Dialogues"
 tldr: "Generates full-duplex dialogue data whose turn-taking behavior adapts to each scenario using a small set of human preference annotations."
 # image: /images/none.png
