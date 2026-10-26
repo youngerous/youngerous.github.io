@@ -204,16 +204,23 @@ h1 { font: 600 clamp(2.5rem, 4.5vw, 3.5rem)/1.12 var(--display); letter-spacing:
 .profile { padding-top: 4px; }
 .profile-picture { display: block; min-width: 0; }
 .profile-photo { display: block; width: 100%; border-radius: 18px; }
-.contact-details { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 4px; margin-top: 4px; font-size: 0.9375rem; overflow-wrap: anywhere; }
-.contact-icon { margin-right: 4px; }
-.contact-item { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
-// A short hairline separates the two addresses.
-.contact-item + .contact-item::before { content: ''; flex: 0 0 1px; height: 14px; margin-right: 22px; background: var(--line); }
+.contact-details { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: 0.9375rem; }
+.contact-list { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 33px; min-width: 0; clip-path: inset(-100vmax -100vmax -100vmax 0); }
+.contact-item { position: relative; display: inline-flex; align-items: center; gap: 6px; min-height: 27px; margin-left: -29px; }
+.contact-address { white-space: nowrap; }
+// Every address carries a leading hairline; the one starting a line sits outside the list and is clipped away.
+.contact-item::before { content: ''; flex: 0 0 1px; height: 14px; margin-right: 22px; background: var(--line); }
+// Hovering an address names it.
+.contact-address::after { content: attr(data-label); position: absolute; top: calc(100% + 1px); left: 29px; padding: 1px 6px; border-radius: 4px; background: var(--ink); color: var(--bg); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.02em; line-height: 1.5; white-space: nowrap; pointer-events: none; opacity: 0; transform: translateY(-2px); transition: opacity 0.15s ease, transform 0.15s ease; }
+.contact-item:hover .contact-address::after, .contact-item:has(.copy-email:focus-visible) .contact-address::after { opacity: 1; transform: none; }
+// Leave room for the label when the addresses stack.
+@media (hover: hover) and (pointer: fine) { .contact-list { row-gap: 20px; } }
 .copy-email { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 3px; background: transparent; color: var(--muted); cursor: pointer; }
 .copy-email:hover { background: var(--soft); color: var(--accent); }
 .copy-email { opacity: 0; transition: opacity 0.15s ease, background-color 0.15s ease; }
 .contact-item:hover .copy-email, .copy-email:focus-visible, .copy-email[data-copied] { opacity: 1; }
-@media (hover: none) { .copy-email { opacity: 1; } }
+// Touch screens cannot hover, so keep the copy button visible.
+@media (hover: none), (pointer: coarse) { .copy-email { opacity: 1; } }
 .copy-email .copied-icon, .copy-email[data-copied] .copy-icon { display: none; }
 .copy-email[data-copied] .copied-icon { display: block; color: var(--accent); }
 .copy-email:disabled { cursor: wait; }
@@ -418,9 +425,7 @@ h2 { font: 600 2rem/1.2 var(--display); letter-spacing: -0.025em; overflow-wrap:
   .profile-picture { grid-area: photo; align-self: center; }
   .eyebrow { font-size: 0.9375rem; margin-bottom: 14px; }
   .biography { grid-area: biography; margin-top: 0; }
-  .contact-details { grid-area: contact; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 8px; margin-top: 0; }
-  .contact-icon { grid-row: span 2; align-self: start; margin-right: 0; }
-  .contact-item + .contact-item::before { display: none; }
+  .contact-details { grid-area: contact; margin-top: 0; }
   .profile-links { grid-area: links; gap: 6px 18px; margin-top: 0; }
   .content-section { padding: 56px 0; }
   .section-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }

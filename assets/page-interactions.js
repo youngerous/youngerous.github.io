@@ -76,7 +76,11 @@
 
   const status = document.getElementById('copy-status');
   document.querySelectorAll('.copy-email').forEach(button => {
-    const fallback = button.closest('.contact-item').querySelector('.copy-fallback');
+    const item = button.closest('.contact-item');
+    const fallback = item.querySelector('.copy-fallback');
+    // The page source only carries the "[at] [dot]" form; rebuild the real address on demand.
+    const email = () => item.querySelector('.contact-address').textContent.trim()
+      .replace(/\s*\[at\]\s*/g, '@').replace(/\s*\[dot\]\s*/g, '.');
     let resetTimer;
     button.hidden = false;
     button.addEventListener('click', async () => {
@@ -85,11 +89,11 @@
       if (status) status.textContent = '';
       try {
         if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
-        await navigator.clipboard.writeText(button.dataset.email);
+        await navigator.clipboard.writeText(email());
         button.setAttribute('data-copied', '');
         button.title = 'Copied';
         fallback.hidden = true;
-        if (status) status.textContent = `${button.dataset.email} copied to clipboard.`;
+        if (status) status.textContent = `${email()} copied to clipboard.`;
         resetTimer = setTimeout(() => {
           button.removeAttribute('data-copied');
           button.title = 'Copy email address';
@@ -99,6 +103,7 @@
         button.title = 'Copy email address';
         fallback.hidden = false;
         const input = fallback.querySelector('input');
+        input.value = email();
         input.focus();
         input.select();
         if (status) status.textContent = 'Automatic copying is unavailable. The email address is selected for manual copying.';

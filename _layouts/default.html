@@ -93,8 +93,10 @@
         </div>
         <div class="contact-details" aria-label="Email">
           <span class="profile-icon contact-icon" aria-hidden="true">{% include profile-icon.html name='email' %}</span>
-          {% include contact.html label="Affiliation" email="tk30@illinois.edu" %}
-          {% include contact.html label="Personal" email="takyoung.ai@gmail.com" %}
+          <div class="contact-list">
+            {% include contact.html label="Affiliation" address="tk30 [at] illinois [dot] edu" %}
+            {% include contact.html label="Personal" address="takyoung.ai [at] gmail [dot] com" %}
+          </div>
           <span class="sr-only" id="copy-status" role="status" aria-live="polite"></span>
         </div>
       </div>
